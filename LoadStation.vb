@@ -1,3 +1,7 @@
+/*
+ * This script fills the warpcore of a station with deuterium provided from the colony below.
+ * MinDeutOnColony specifys the remainder of deuterium to be lef ton the colony.
+ */
 Var MinDeutOnColony As Integer = 1000;
 
 Var SpaceStationID As Integer = 1940125;
