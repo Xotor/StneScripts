@@ -51,7 +51,6 @@ Function DistributeWarpCore(FleedID As Integer, DockShipID As Integer){
                 SecureDock(Dealer, DockShipID);
                 SecureDock(Acceptor, DockShipID);
                 If(Dealer.DockedToShipID = DockShipID AND Acceptor.DockedToShipID = DockShipID){ 
-                  //WriteLine("Dealer " & Dealer.GetNameText() & " schickt " & Amount & " Warpkern zu " & Acceptor.GetNameText());
                   Dealer.Action.TransferToShip(Acceptor.ShipID, Amount, EBeamResource.Warpcore);
                   Acceptor.Action.Undock();
                 } Else {

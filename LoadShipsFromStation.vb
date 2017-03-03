@@ -4,45 +4,78 @@
 Var StationMinWarpCore As Integer = 4000;
 Var SpaceStationID As Integer = 1940125;
 Var AllID As Integer = 20935;
-Var Station As New CMyShip(SpaceStationID);
+Var station As New CMyShip(SpaceStationID);
 Var All As New CMyFleet(AllID);
 
-WriteLine(Station.Name & " has " & Station.WarpCore & " warpcore");
+WriteLine(station.Name & " has " & station.WarpCore & " warpcore");
+
+
 
 Var ship As CMyShip;
-For(Each ship In All.Ships){
-  If(ship.MapPosition.X = Station.MapPosition.X AND ship.MapPosition.Y = Station.MapPosition.Y AND ship.MapPosition.InOrbit = Station.MapPosition.InOrbit){
-    //If(ship.Type <> EShipType.Adrec AND ship.Type <> EShipType.Bandari AND ship.Type <> EShipType.Tanker AND ship.Definition.IsSpaceStation = False){
-    If(ship.Definition.IsSpaceStation = False){
-      If(Station.WarpCore > StationMinWarpCore AND Station.FreeDockingPorts(ship) AND ship.MainComputerIsActive AND (ship.Definition.WarpCore - ship.WarpCore) > 0){
-        // WriteLine(ship.Name & " " & ship.Type);
-        If(ship.Docked = True AND ship.DockedToShipID <> Station.ShipID){
-          ship.Action.Undock();
-        }
-        If(ship.Docked = False){
-          ship.Action.DockTo(Station.ShipID);
-        }
-        If(ship.Docked){
-          Var Amount As Double = (ship.Definition.WarpCore - ship.WarpCore);
-          ship.Action.TransferFromShip(Station.ShipID, Amount, EBeamResource.Warpcore);
-          ship.Action.Undock();
-        } Else {
-          WriteLine("Failed to Dock " & ship.Name & " to the Station");
-        }
-        
-      } Else {
-        If((ship.Definition.WarpCore - ship.WarpCore) > 0){
-          If(Station.WarpCore <= StationMinWarpCore){
-            WriteLine("*** The station has just " & Station.WarpCore & " warpcore left");
-          }
-          If(Station.FreeDockingPorts(ship) = False){
-            WriteLine("*** No free docking ports available!");
-          }
-          If(ship.MainComputerIsActive = False){
-            WriteLine("**** Main Computer of " & ship.Name & " is offline");
-          }
-        }
-      }
+For(Each ship In All.Ships) {
+  If(canShipBeLoaded(ship, station)) { 
+    If(ship.Docked = True AND ship.DockedToShipID <> station.ShipID) {
+      ship.Action.Undock();
     }
+    If(ship.Docked = False){
+      ship.Action.DockTo(station.ShipID);
+    }
+    If(ship.Docked){
+      Var Amount As Double = (ship.Definition.WarpCore - ship.WarpCore);
+      ship.Action.TransferFromShip(station.ShipID, Amount, EBeamResource.Warpcore);
+      ship.Action.Undock();
+    } Else {
+      WriteLine("Failed to Dock " & ship.Name & " to the station");
+    } 
   }
 }
+
+Function isPositionEquals(a As CMyShip, b As CMyShip) As Boolean {
+  If(a.MapPosition.X <> b.MapPosition.X) {
+    Return False;
+  }
+  If(a.MapPosition.Y <> b.MapPosition.Y) {
+    Return False;
+  }
+  If(a.MapPosition.InOrbit <> b.MapPosition.InOrbit) {
+    Return False;
+  }
+  If(a.MapPosition.MapID <> b.MapPosition.MapID) {
+    WriteLine("MapID is not equals!!");
+    Return False;
+  }
+  If(a.MapPosition.MapInstanceID <> b.MapPosition.MapInstanceID) {
+    WriteLine("MapInstanceID is not equals!!");
+    Return False;
+  }
+}
+
+Function canShipBeLoaded(aship As CMyShip, astation As CMyShip) As Boolean {
+  If( not isPositionEquals(aship, astation)) {
+    Return False;
+  }
+  If(aship.ShipID = astation.ShipID) {
+  }
+  If(astation.WarpCore <= StationMinWarpCore) {
+    WriteLine("*** The station has just " & station.WarpCore & " warpcore left");
+    Return False;
+  }
+  If( not astation.FreeDockingPorts(aship)) {
+    WriteLine("*** No free docking ports on " & astation.Name & " available!");
+    Return False;
+  }
+  If( not astation.MainComputerIsActive) {4
+    WriteLine("**** Main Computer of " & astation.Name & " is offlin");
+    Return False;
+  }
+  If( not aship.MainComputerIsActive) {
+    WriteLine("**** Main Computer of " & aship.Name & " is offline");
+    Return False;
+  }
+  If((aship.Definition.WarpCore - aship.WarpCore) <= 0){
+    Return False;
+  }
+  Return True;
+}
+
+

@@ -18,16 +18,16 @@ For(Each Ship In MyShip.SRS){
   If(Owner.UserID <> Self.UserID){
     If("" & Owner.GetRelation(Self) <> "Freund"){
       If(Ship.AlertLevel = EAlertLevel.Green){
-        WriteLine("Friendly: " & Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
+        WriteLine(Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
       }
       If(Ship.AlertLevel = EAlertLevel.Yellow){
-        WriteLine("Warning: " & Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
+        WriteLine(Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
       }
       If(Ship.AlertLevel = EAlertLevel.Red){
-        WriteLine("Critical: " & Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
+        WriteLine(Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
       }
     } Else {
-      WriteLine("Friendly: " & Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
+      WriteLine(Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Friendly (" & Ship.AlertLevel & ")");
     }
   }
 }

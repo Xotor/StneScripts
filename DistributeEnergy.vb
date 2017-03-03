@@ -40,8 +40,7 @@ Function DistributeEnergy(FleedID As Integer, DockShipID As Integer, MinEnergy A
               If(DockShipID > 0){
                 SecureDock(Dealer, DockShipID);
                 SecureDock(Acceptor, DockShipID);
-                If(Dealer.DockedToShipID = DockShipID AND Acceptor.DockedToShipID = DockShipID){ 
-                  //WriteLine("Dealer " & Dealer.Name & " schickt " & Amount & " Energie zu " & Acceptor.Name);
+                If(Dealer.DockedToShipID = DockShipID AND Acceptor.DockedToShipID = DockShipID){ ;
                   Dealer.Action.TransferToShip(Acceptor.ShipID, Amount, EBeamResource.Energy);
                   Acceptor.Action.Undock();
                 } Else {

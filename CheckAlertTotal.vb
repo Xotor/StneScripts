@@ -33,15 +33,9 @@ While(ShipsIter.Next())
       Var Owner As New CUser(Ship.UserID);
       If("" & Owner.GetRelation(Self) <> "Freund")
       {
-        If(Ship.AlertLevel = EAlertLevel.Green){
-          WriteLine("Friendly: " & Koordinate & Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
-        }
-        If(Ship.AlertLevel = EAlertLevel.Yellow){
-          WriteLine("Warning: " & Koordinate & Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
-        }
-        If(Ship.AlertLevel = EAlertLevel.Red){
-          WriteLine("Critical: " & Koordinate & Ship.GetNameTextAndID & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel);
-        }
+			Var text As String = Koordinate & Ship.GetNameTextAndID;
+			text = text & " von " & Owner.NameAndID & " Alarmstufe " & Ship.AlertLevel; 
+ 			WriteLine(text);
       }
     }
     Koordinaten.Add(Koordinate);
