@@ -56,6 +56,7 @@ Function canShipBeLoaded(aship As CMyShip, astation As CMyShip) As Boolean {
     Return False;
   }
   If(aship.ShipID = astation.ShipID) {
+    Return False;
   }
   If(astation.WarpCore <= StationMinWarpCore) {
     WriteLine("*** The station has just " & station.WarpCore & " warpcore left");
