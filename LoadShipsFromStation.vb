@@ -48,6 +48,7 @@ Function isPositionEquals(a As CMyShip, b As CMyShip) As Boolean {
     WriteLine("MapInstanceID is not equals!!");
     Return False;
   }
+  Return True;
 }
 
 Function canShipBeLoaded(aship As CMyShip, astation As CMyShip) As Boolean {
